@@ -2,6 +2,8 @@
 backend/.env
 backend/test.db
 backend/*.db
+test.db
+/test.db
 .pgdata/
 
 # Python

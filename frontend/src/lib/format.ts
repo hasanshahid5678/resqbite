@@ -1,4 +1,4 @@
-export const API_BASE = "/api";
+export const API_BASE = (import.meta.env.VITE_API_BASE as string) || "/api";
 
 export function discountPct(original: number | string, discounted: number | string): number {
   const o = Number(original);
