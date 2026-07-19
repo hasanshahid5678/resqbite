@@ -1,3 +1,4 @@
+from typing import Any
 from json import JSONDecodeError
 import json
 from pydantic import field_validator
@@ -22,7 +23,7 @@ class Settings(BaseSettings):
     QR_SECRET_KEY: str = "qr-signing-secret-change-me"
 
     MAX_IMAGE_BYTES: int = 800 * 1024  # 800 KB
-    CORS_ORIGINS: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    CORS_ORIGINS: Any = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
