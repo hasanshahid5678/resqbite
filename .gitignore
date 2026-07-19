@@ -1,0 +1,20 @@
+# Environments
+backend/.env
+backend/test.db
+backend/*.db
+.pgdata/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Editors
+.vscode/
+.idea/
+.DS_Store
