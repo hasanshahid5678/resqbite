@@ -1,3 +1,6 @@
+from json import JSONDecodeError
+import json
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,6 +23,22 @@ class Settings(BaseSettings):
 
     MAX_IMAGE_BYTES: int = 800 * 1024  # 800 KB
     CORS_ORIGINS: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def assemble_cors_origins(cls, v: str | list[str]) -> list[str]:
+        if isinstance(v, str):
+            if not v:
+                return []
+            try:
+                parsed = json.loads(v)
+                if isinstance(parsed, list):
+                    return [str(item).strip() for item in parsed]
+            except (JSONDecodeError, TypeError):
+                pass
+            cleaned = v.replace("[", "").replace("]", "").replace("'", "").replace('"', "")
+            return [item.strip() for item in cleaned.split(",") if item.strip()]
+        return v
 
     COOKIE_SECURE: bool = False
     COOKIE_SAMESITE: str = "lax"
